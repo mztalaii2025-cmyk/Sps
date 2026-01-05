@@ -3127,8 +3127,8 @@ input, textarea, select, button {
         <!-- تب‌های داخلی پروفایل -->
         <div class="profile-tabs">
             <button class="profile-tab active" data-tab="info">اطلاعات حساب</button>
-            <button class="profile-tab" data-tab="wallet">موجودی و پاداش</button>
-            <button class="profile-tab" data-tab="referral">سیستم معرف</button>
+            <button class="profile-tab" data-tab="wallet">موجودی حساب</button>
+            <button class="profile-tab" data-tab="referral">زیرمجموعه ها</button>
         </div>
         
         <!-- محتوای اصلی -->
@@ -6404,6 +6404,25 @@ async function updateProfileUI(user) {
     };
     
 })();
+
+// این را در script اضافه کن
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.toggle-password')) {
+        const btn = e.target.closest('.toggle-password');
+        const icon = btn.querySelector('i');
+        const input = btn.previousElementSibling;
+        
+        if (input && input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else if (input) {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+        
+        if (navigator.vibrate) navigator.vibrate(30);
+    }
+});
 
 // ==================== REVIEWS SYSTEM ====================
 
