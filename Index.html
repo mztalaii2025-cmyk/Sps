@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPS | خدمات برقی هوشمند</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- قبل از لینک‌های دیگر -->
+<link rel="preconnect" href="https://pigdpbfqrxpocmzyyfsr.supabase.co">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://pigdpbfqrxpocmzyyfsr.supabase.co">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Vazirmatn:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
@@ -24,6 +28,7 @@
             --shadow-gold: 0 10px 30px rgba(255, 215, 0, 0.2);
             --success-green: #51cf66;
             --error-red: #ff6b6b;
+            --wallet-green: #2ecc71;
         }
         
         * {
@@ -2487,244 +2492,422 @@ input, textarea, select, button {
         max-width: 200px;
     }
 }
-/* ==================== هدر شیک و مدرن (فقط ظاهر) ==================== */
-
+/* ==================== طرح 3: هدر با منوی کامل ==================== */
 .elegant-header {
-    background: rgba(16, 20, 40, 0.95);
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    background: linear-gradient(180deg, 
+        rgba(16, 20, 40, 0.95) 0%,
+        rgba(10, 15, 43, 0.9) 100%);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.08);
     position: fixed;
     top: 0;
     right: 0;
     width: 100%;
     z-index: 1000;
     padding: 0;
-    height: 65px;
+    height: 72px;
     box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        0 5px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .header-content {
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 0 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
-    position: relative;
 }
 
-/* خط نورانی زیر هدر */
-.elegant-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255, 215, 0, 0.3) 50%, 
-        transparent 100%);
-}
-
-/* لوگو کوچک و مدرن */
+/* لوگو با افکت نئون */
 .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 36px !important; /* کوچکتر */
-    font-weight: 800;
-    background: linear-gradient(135deg, #FFD700 0%, #FFAA00 50%, #FFD700 100%);
-    background-size: 200% auto;
+    font-size: 40px !important;
+    font-weight: 900;
+    color: #FFD700;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.3),
+        0 0 20px rgba(255, 215, 0, 0.2),
+        0 0 30px rgba(255, 215, 0, 0.1);
+    letter-spacing: 2px;
+    position: relative;
+    padding: 0 10px;
+}
+
+.logo::before {
+    content: 'SPS';
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: transparent;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        rgba(255, 215, 0, 0.1) 50%,
+        transparent 100%);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
-    text-shadow: 
-        0 2px 15px rgba(255, 215, 0, 0.25),
-        0 0 0 rgba(255, 215, 0, 0);
-    letter-spacing: 1.5px;
-    position: relative;
-    padding: 8px 0;
-    transition: all 0.4s ease;
-    animation: goldShine 3s infinite linear;
+    filter: blur(5px);
+    z-index: -1;
+    animation: neonFlicker 3s infinite alternate;
 }
 
-@keyframes goldShine {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+@keyframes neonFlicker {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
 }
 
-.logo:hover {
-    transform: translateY(-1px);
-    text-shadow: 
-        0 4px 20px rgba(255, 215, 0, 0.4),
-        0 0 20px rgba(255, 215, 0, 0.2);
+/* منوی اصلی در هدر */
+.main-nav {
+    display: flex;
+    gap: 2px;
+    margin: 0 30px;
 }
 
-/* آیکون کاربر شیک */
-.user-icon {
-    width: 40px; /* کمی کوچکتر */
-    height: 40px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 12px; /* گوشه‌های نرم */
+.main-nav-item {
+    padding: 12px 22px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 8px;
     position: relative;
     overflow: hidden;
 }
 
-/* افکت شیشه‌ای */
-.user-icon::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.1) 0%,
-        transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.user-icon:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 215, 0, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 6px 20px rgba(255, 215, 0, 0.15),
-        0 0 0 1px rgba(255, 215, 0, 0.1);
-}
-
-.user-icon:hover::before {
-    opacity: 1;
-}
-
-.user-icon.logged-in {
-    background: linear-gradient(135deg, 
-        rgba(255, 215, 0, 0.2) 0%,
-        rgba(255, 170, 0, 0.1) 100%);
-    border-color: rgba(255, 215, 0, 0.4);
+.main-nav-item:hover {
     color: #FFD700;
-    box-shadow: 
-        0 4px 15px rgba(255, 215, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: rgba(255, 215, 0, 0.05);
 }
 
-.user-icon.logged-in:hover {
-    background: linear-gradient(135deg, 
-        rgba(255, 215, 0, 0.3) 0%,
-        rgba(255, 170, 0, 0.2) 100%);
-    box-shadow: 
-        0 8px 25px rgba(255, 215, 0, 0.3),
-        0 0 0 1px rgba(255, 215, 0, 0.2);
+.main-nav-item.active {
+    color: #FFD700;
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.1);
 }
 
-/* نقطه وضعیت */
-.user-icon::after {
-    content: '';
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    width: 8px;
-    height: 8px;
-    background: #ff6b6b;
-    border-radius: 50%;
-    border: 2px solid rgba(16, 20, 40, 0.9);
+.main-nav-item i {
+    font-size: 16px;
+}
+
+/* سایدبار کاربر */
+.user-sidebar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transition: all 0.3s ease;
-    opacity: 0.8;
 }
 
-.user-icon.logged-in::after {
-    background: #51cf66;
-    opacity: 1;
-    box-shadow: 0 0 10px rgba(81, 207, 102, 0.5);
+.user-info:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 215, 0, 0.2);
 }
 
-/* نام کاربر در هدر */
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD700 0%, #FFAA00 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1A1F3C;
+    font-weight: 700;
+    font-size: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
 .user-name {
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.9);
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    display: none; /* فعلاً مخفی */
+    font-weight: 600;
+    color: white;
 }
 
 .user-status {
+    font-size: 11px;
+    color: #51cf66;
     display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: #51cf66;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* دکمه‌های اکشن */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.action-btn:hover {
+    color: #FFD700;
+    background: rgba(255, 215, 0, 0.08);
+    border-color: rgba(255, 215, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ==================== استایل‌های سیستم معرف و موجودی ==================== */
+.referral-card {
+    background: linear-gradient(135deg, 
+        rgba(26, 31, 60, 0.8) 0%,
+        rgba(10, 15, 43, 0.8) 100%);
+    border: 1px solid rgba(0, 255, 255, 0.15);
+}
+
+.wallet-card {
+    background: linear-gradient(135deg, 
+        rgba(46, 204, 113, 0.1) 0%,
+        rgba(39, 174, 96, 0.08) 100%);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.referral-code-box {
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px dashed rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.referral-code {
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFD700;
+    letter-spacing: 2px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.copy-btn {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
 }
 
-/* افکت نور پشت لوگو (اختیاری) */
-.logo-glow {
-    position: absolute;
-    top: 50%;
-    right: -10px;
-    transform: translateY(-50%);
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle, 
-        rgba(255, 215, 0, 0.15) 0%,
-        rgba(255, 215, 0, 0.05) 50%,
-        transparent 70%);
-    filter: blur(10px);
-    z-index: -1;
-    opacity: 0.5;
+.copy-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-2px);
 }
 
-/* رسپانسیو */
+.referral-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.wallet-balance {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.balance-amount {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--wallet-green);
+    margin: 10px 0;
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+}
+
+.balance-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.rewards-list {
+    margin-top: 20px;
+}
+
+.reward-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.reward-info h4 {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.reward-date {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.reward-amount {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--wallet-green);
+}
+
+/* تب‌های داخلی پروفایل */
+.profile-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.profile-tab {
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.profile-tab:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+}
+
+.profile-tab.active {
+    background: var(--gold-gradient);
+    color: #1A1F3C;
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+}
+
+.tab-content-internal {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content-internal.active {
+    display: block;
+}
+
+/* رسپانسیو برای سیستم جدید */
 @media (max-width: 768px) {
-    .header-content {
-        padding: 0 20px;
+    .referral-stats {
+        grid-template-columns: 1fr;
     }
     
-    .logo {
-        font-size: 22px !important;
-        letter-spacing: 1px;
+    .stat-number {
+        font-size: 20px;
     }
     
-    .user-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 15px;
-        border-radius: 10px;
+    .balance-amount {
+        font-size: 28px;
+    }
+    
+    .profile-tabs {
+        padding-bottom: 5px;
+    }
+    
+    .profile-tab {
+        padding: 10px 15px;
+        font-size: 13px;
     }
 }
 
 @media (max-width: 480px) {
-    .elegant-header {
-        height: 60px;
+    .referral-code {
+        font-size: 16px;
+        padding: 8px;
     }
     
-    .header-content {
-        padding: 0 15px;
+    .balance-amount {
+        font-size: 24px;
     }
     
-    .logo {
-        font-size: 20px !important;
+    .reward-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
     }
     
-    .user-icon {
-        width: 34px;
-        height: 34px;
-        font-size: 14px;
-    }
-    
-    .user-icon::after {
-        width: 6px;
-        height: 6px;
-        bottom: 4px;
-        left: 4px;
+    .reward-amount {
+        align-self: flex-end;
     }
 }
     </style>
@@ -2861,7 +3044,7 @@ input, textarea, select, button {
             </div>
         </div>
         
-        <!-- در main-container، بعد از تب home -->
+        <!-- تب پروژه‌ها -->
 <div id="projectsTab" class="tab-content">
     <section class="projects-section">
         <div class="projects-header">
@@ -2883,12 +3066,12 @@ input, textarea, select, button {
     </section>
 </div>
 
-<!-- مودال -->
+<!-- مودال پروژه -->
 <div class="project-modal" id="projectModal">
     <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title" id="modalProjectTitle">عنوان پروژه</h3>
-            <button class="close-modal" id="closeModal">×</button>
+            <button class="close-modal" id="closeProjectModalBtn">×</button>
         </div>
         <div class="modal-body">
             <div class="modal-description" id="modalProjectDescription">
@@ -2941,70 +3124,207 @@ input, textarea, select, button {
             </div>
         </div>
         
+        <!-- تب‌های داخلی پروفایل -->
+        <div class="profile-tabs">
+            <button class="profile-tab active" data-tab="info">اطلاعات حساب</button>
+            <button class="profile-tab" data-tab="wallet">موجودی و پاداش</button>
+            <button class="profile-tab" data-tab="referral">سیستم معرف</button>
+        </div>
+        
         <!-- محتوای اصلی -->
         <div class="modern-profile-content">
-            <!-- کارت اطلاعات کاربر -->
-            <div class="profile-card glass-card">
-                <div class="card-header">
-                    <div class="header-icon">
-                        <i class="fas fa-user-circle"></i>
+            
+            <!-- تب ۱: اطلاعات حساب کاربری -->
+            <div id="profileTabInfo" class="tab-content-internal active">
+                <div class="profile-card glass-card">
+                    <div class="card-header">
+                        <div class="header-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <h3>اطلاعات حساب کاربری</h3>
                     </div>
-                    <h3>اطلاعات حساب کاربری</h3>
+                    
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fas fa-user-tag"></i>
+                                نام کاربری
+                            </div>
+                            <div class="info-value" id="modernUsername">کاربر مهمان</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fas fa-envelope"></i>
+                                ایمیل
+                            </div>
+                            <div class="info-value" id="modernEmail">ثبت‌نام نکرده‌اید</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fas fa-phone"></i>
+                                شماره تماس
+                            </div>
+                            <div class="info-value" id="modernPhone">ندارید</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fas fa-calendar-alt"></i>
+                                تاریخ ثبت‌نام
+                            </div>
+                            <div class="info-value" id="modernCreatedAt">-</div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="info-list">
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fas fa-user-tag"></i>
-                            نام کاربری
+                <!-- کارت اشتراک -->
+                <div class="profile-card glass-card subscription-card">
+                    <div class="card-header">
+                        <div class="header-icon">
+                            <i class="fas fa-crown"></i>
                         </div>
-                        <div class="info-value" id="modernUsername">کاربر مهمان</div>
+                        <h3>اشتراک فعال</h3>
+                        <div class="subscription-badge" id="subscriptionBadge">
+                            <span class="badge-text">بدون اشتراک</span>
+                        </div>
                     </div>
                     
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fas fa-envelope"></i>
-                            ایمیل
+                    <div class="subscription-content">
+                        <div class="subscription-type" id="modernSubscriptionType">
+                            <i class="fas fa-times-circle"></i>
+                            هیچ اشتراکی فعال نیست
                         </div>
-                        <div class="info-value" id="modernEmail">ثبت‌نام نکرده‌اید</div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fas fa-phone"></i>
-                            شماره تماس
-                        </div>
-                        <div class="info-value" id="modernPhone">ندارید</div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fas fa-calendar-alt"></i>
-                            تاریخ ثبت‌نام
-                        </div>
-                        <div class="info-value" id="modernCreatedAt">-</div>
+                        <p class="subscription-desc">برای دسترسی به امکانات ویژه، به بخش اشتراک‌ها مراجعه کنید</p>
                     </div>
                 </div>
             </div>
             
-            <!-- کارت اشتراک (ساده‌تر) -->
-            <div class="profile-card glass-card subscription-card">
-                <div class="card-header">
-                    <div class="header-icon">
-                        <i class="fas fa-crown"></i>
+            <!-- تب ۲: موجودی و پاداش -->
+            <div id="profileTabWallet" class="tab-content-internal">
+                <!-- کارت کیف پول -->
+                <div class="profile-card glass-card wallet-card">
+                    <div class="card-header">
+                        <div class="header-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h3>کیف پول شما</h3>
                     </div>
-                    <h3>اشتراک فعال</h3>
-                    <div class="subscription-badge" id="subscriptionBadge">
-                        <span class="badge-text">بدون اشتراک</span>
+                    
+                    <div class="wallet-balance">
+                        <div class="balance-label">موجودی فعلی</div>
+                        <div class="balance-amount" id="walletBalance">۰ تومان</div>
+                        <div class="balance-label" id="lastUpdateTime">آخرین بروزرسانی: -</div>
+                    </div>
+                    
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fas fa-gem"></i>
+                                کل پاداش‌های دریافتی
+                            </div>
+                            <div class="info-value" id="totalRewards">۰ تومان</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fas fa-users"></i>
+                                از معرفی کاربران الماس
+                            </div>
+                            <div class="info-value" id="diamondReferrals">۰ نفر</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="subscription-content">
-                    <div class="subscription-type" id="modernSubscriptionType">
-                        <i class="fas fa-times-circle"></i>
-                        هیچ اشتراکی فعال نیست
+                <!-- تاریخچه پاداش‌ها -->
+                <div class="profile-card glass-card">
+                    <div class="card-header">
+                        <div class="header-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>تاریخچه پاداش‌ها</h3>
                     </div>
-                    <p class="subscription-desc">برای دسترسی به امکانات ویژه، به بخش اشتراک‌ها مراجعه کنید</p>
+                    
+                    <div class="rewards-list" id="rewardsHistory">
+                        <div class="info-item" style="text-align: center; padding: 20px;">
+                            <div class="info-value" style="color: rgba(255,255,255,0.5);">
+                                <i class="fas fa-history" style="font-size: 24px; margin-bottom: 10px;"></i>
+                                <p>هنوز پاداشی دریافت نکرده‌اید</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تب ۳: سیستم معرف -->
+            <div id="profileTabReferral" class="tab-content-internal">
+                <!-- کارت سیستم معرف -->
+                <div class="profile-card glass-card referral-card">
+                    <div class="card-header">
+                        <div class="header-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3>سیستم معرف شما</h3>
+                    </div>
+                    
+                    <div class="referral-code-box">
+                        <div style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 10px;">
+                            کد معرف شخصی شما:
+                        </div>
+                        <div class="referral-code" id="referralCode">در حال بارگیری...</div>
+                        <button class="copy-btn" id="copyReferralBtn">
+                            <i class="fas fa-copy"></i>
+                            کپی کد
+                        </button>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 15px;">
+                            این کد را به دوستان خود بدهید تا با آن ثبت‌نام کنند
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- آمار زیرمجموعه‌ها -->
+                <div class="profile-card glass-card">
+                    <div class="card-header">
+                        <div class="header-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>آمار زیرمجموعه‌ها</h3>
+                    </div>
+                    
+                    <div class="referral-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalReferralsCount">۰</div>
+                            <div class="stat-label">کل زیرمجموعه‌ها</div>
+                        </div>
+                        
+                        <div class="stat-item">
+                            <div class="stat-number" id="activeReferralsCount">۰</div>
+                            <div class="stat-label">زیرمجموعه‌های فعال</div>
+                        </div>
+                        
+                        <div class="stat-item">
+                            <div class="stat-number" id="goldReferralsCount">۰</div>
+                            <div class="stat-label">اشتراک طلایی</div>
+                        </div>
+                        
+                        <div class="stat-item">
+                            <div class="stat-number" id="diamondReferralsCount">۰</div>
+                            <div class="stat-label">اشتراک الماس</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-list" style="margin-top: 20px;">
+                        <div class="info-item">
+                            <div class="info-label">
+                                <i class="fas fa-info-circle"></i>
+                                توضیحات سیستم
+                            </div>
+                            <div class="info-value" style="font-size: 13px; text-align: right;">
+                                <span style="color: #FFD700;">پاداش ۱,۰۰۰,۰۰۰ تومانی</span> فقط برای معرفی کاربران اشتراک الماس
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -3025,7 +3345,7 @@ input, textarea, select, button {
         </div>
     </section>
 </div>
-    
+
     <!-- نویگیشن پایین -->
     <!-- نویگیشن مدرن گلاس مورفی -->
 <nav class="bottom-nav">
@@ -3071,7 +3391,7 @@ input, textarea, select, button {
     <!-- مودال ثبت‌نام/ورود چند مرحله‌ای جدید -->
     <div class="modal-overlay" id="authModal">
         <div class="auth-modal">
-            <button class="close-modal" id="closeModal">×</button>
+            <button class="close-modal" id="closeAuthModalBtn">×</button>
             
             <!-- فرم ثبت‌نام چند مرحله‌ای -->
             <div id="registerWizard">
@@ -3108,6 +3428,14 @@ input, textarea, select, button {
                         <input type="tel" id="phone" class="form-control" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required>
                         <div class="error-message" id="phoneError"></div>
                         <div class="success-message" id="phoneSuccess"></div>
+                    </div>
+                    
+                    <!-- فیلد کد معرف (اختیاری) -->
+                    <div class="form-group">
+                        <label for="referralCodeInput">کد معرف (اختیاری)</label>
+                        <input type="text" id="referralCodeInput" class="form-control" placeholder="کد معرف دوست خود را وارد کنید">
+                        <div class="error-message" id="referralCodeError"></div>
+                        <div class="success-message" id="referralCodeSuccess"></div>
                     </div>
                     
                     <div class="form-navigation">
@@ -3219,8 +3547,7 @@ input, textarea, select, button {
     <button id="backToTop" class="back-to-top">
         <i class="fas fa-chevron-up"></i>
     </button>
-
-    <script>
+        <script>
         // ==================== SUPABASE CONFIGURATION ====================
         const SUPABASE_URL = 'https://pigdpbfqrxpocmzyyfsr.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpZ2RwYmZxcnhwb2Ntenl5ZnNyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUxMjIxMiwiZXhwIjoyMDgyMDg4MjEyfQ.RzhdhSnwi4WM1JP6U_jYQvJD9ztrpGNce6Nbhnr-oOM';
@@ -3243,6 +3570,12 @@ input, textarea, select, button {
             // راه‌اندازی رویدادها
             setupEventListeners();
             
+            // راه‌اندازی تب‌های داخلی پروفایل
+            setupProfileTabs();
+            
+            // راه‌اندازی سیستم پروژه‌ها
+            initializeProjectsSystem();
+            
             // دکمه بازگشت به بالا
             setupBackToTop();
             
@@ -3256,6 +3589,379 @@ input, textarea, select, button {
             
             console.log('✅ SPS Application Ready');
         });
+        
+        // ==================== FUNCTIONS FOR NEW REFERRAL SYSTEM ====================
+        
+        // ایجاد کد معرف تصادفی
+        function generateReferralCode(length = 8) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        // بررسی معتبر بودن کد معرف
+        async function validateReferralCode(code) {
+            if (!code || code.trim() === '') {
+                return { valid: true, userId: null }; // کد خالی قابل قبول است
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('id, referral_code')
+                    .eq('referral_code', code.toUpperCase())
+                    .single();
+                    
+                if (error || !data) {
+                    return { valid: false, error: 'کد معرف معتبر نیست' };
+                }
+                
+                return { valid: true, userId: data.id };
+            } catch (error) {
+                console.error('Error validating referral code:', error);
+                return { valid: false, error: 'خطا در بررسی کد معرف' };
+            }
+        }
+        
+        // ثبت کاربر به عنوان زیرمجموعه
+        async function registerReferral(newUserId, referralCode) {
+            if (!referralCode || referralCode.trim() === '') {
+                return { success: true, message: 'بدون معرف ثبت‌نام کرد' };
+            }
+            
+            try {
+                // پیدا کردن کاربر معرف با کد
+                const { data: referrerData, error: referrerError } = await supabase
+                    .from('users')
+                    .select('id, full_name')
+                    .eq('referral_code', referralCode.toUpperCase())
+                    .single();
+                    
+                if (referrerError || !referrerData) {
+                    return { success: false, error: 'کاربر معرف یافت نشد' };
+                }
+                
+                // ایجاد رکورد معرفی
+                const { error: referralError } = await supabase
+                    .from('referrals')
+                    .insert([{
+                        referrer_id: referrerData.id,
+                        referred_id: newUserId,
+                        status: 'pending'
+                    }]);
+                    
+                if (referralError) {
+                    console.error('Error creating referral record:', referralError);
+                    return { success: false, error: 'خطا در ثبت معرفی' };
+                }
+                
+                // آپدیت آمار کاربر معرف
+                await updateReferrerStats(referrerData.id);
+                
+                return { 
+                    success: true, 
+                    message: `با موفقیت زیرمجموعه ${referrerData.full_name} شدید`
+                };
+                
+            } catch (error) {
+                console.error('Error in registerReferral:', error);
+                return { success: false, error: 'خطا در ثبت معرفی' };
+            }
+        }
+        
+        // آپدیت آمار کاربر معرف
+        async function updateReferrerStats(userId) {
+            try {
+                // شمارش کل زیرمجموعه‌ها
+                const { count: totalCount, error: totalError } = await supabase
+                    .from('referrals')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('referrer_id', userId);
+                    
+                // شمارش زیرمجموعه‌های فعال (دارای اشتراک)
+                const { count: activeCount, error: activeError } = await supabase
+                    .from('referrals')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('referrer_id', userId)
+                    .eq('status', 'active');
+                    
+                if (!totalError) {
+                    await supabase
+                        .from('users')
+                        .update({ total_referrals: totalCount || 0 })
+                        .eq('id', userId);
+                }
+                
+                if (!activeError) {
+                    await supabase
+                        .from('users')
+                        .update({ active_referrals: activeCount || 0 })
+                        .eq('id', userId);
+                }
+                
+            } catch (error) {
+                console.error('Error updating referrer stats:', error);
+            }
+        }
+        
+        // اعطای پاداش به معرف برای خرید اشتراک الماس
+        async function rewardReferrerForDiamondPurchase(userId, subscriptionId) {
+            try {
+                // پیدا کردن معرف کاربر
+                const { data: referralData, error: referralError } = await supabase
+                    .from('referrals')
+                    .select('referrer_id, status')
+                    .eq('referred_id', userId)
+                    .eq('status', 'pending')
+                    .single();
+                    
+                if (referralError || !referralData) {
+                    console.log('No pending referral found for user:', userId);
+                    return false;
+                }
+                
+                const referrerId = referralData.referrer_id;
+                const rewardAmount = 1000000; // 1,000,000 تومان
+                
+                // بررسی آیا قبلاً پاداش داده شده؟
+                const { data: existingReward, error: checkError } = await supabase
+                    .from('referral_rewards')
+                    .select('id')
+                    .eq('subscription_id', subscriptionId)
+                    .single();
+                    
+                if (!checkError && existingReward) {
+                    console.log('Reward already given for this subscription');
+                    return false;
+                }
+                
+                // ایجاد تراکنش پاداش
+                const { error: rewardError } = await supabase
+                    .from('referral_rewards')
+                    .insert([{
+                        referrer_id: referrerId,
+                        referred_id: userId,
+                        subscription_id: subscriptionId,
+                        amount: rewardAmount,
+                        status: 'paid'
+                    }]);
+                    
+                if (rewardError) {
+                    console.error('Error creating reward record:', rewardError);
+                    return false;
+                }
+                
+                // آپدیت موجودی کیف پول معرف
+                const { data: userData, error: userError } = await supabase
+                    .from('users')
+                    .select('wallet_balance')
+                    .eq('id', referrerId)
+                    .single();
+                    
+                if (userError) {
+                    console.error('Error fetching user wallet:', userError);
+                    return false;
+                }
+                
+                const newBalance = (userData.wallet_balance || 0) + rewardAmount;
+                
+                await supabase
+                    .from('users')
+                    .update({ 
+                        wallet_balance: newBalance,
+                        active_referrals: (userData.active_referrals || 0) + 1
+                    })
+                    .eq('id', referrerId);
+                    
+                // آپدیت وضعیت معرفی به فعال
+                await supabase
+                    .from('referrals')
+                    .update({ status: 'active' })
+                    .eq('referred_id', userId)
+                    .eq('referrer_id', referrerId);
+                
+                // ثبت تراکنش کیف پول
+                await supabase
+                    .from('wallet_transactions')
+                    .insert([{
+                        user_id: referrerId,
+                        amount: rewardAmount,
+                        type: 'referral_reward',
+                        description: 'پاداش معرفی کاربر اشتراک الماس',
+                        status: 'completed'
+                    }]);
+                
+                console.log(`✅ Reward ${rewardAmount} given to referrer ${referrerId}`);
+                return true;
+                
+            } catch (error) {
+                console.error('Error in rewardReferrerForDiamondPurchase:', error);
+                return false;
+            }
+        }
+        
+        // بارگیری اطلاعات سیستم معرف برای نمایش در پروفایل
+        async function loadReferralData(userId) {
+            try {
+                // دریافت کد معرف کاربر
+                const { data: userData, error: userError } = await supabase
+                    .from('users')
+                    .select('referral_code, wallet_balance, total_referrals, active_referrals')
+                    .eq('id', userId)
+                    .single();
+                    
+                if (userError || !userData) {
+                    console.error('Error loading user data:', userError);
+                    return null;
+                }
+                
+                // اگر کاربر کد معرف ندارد، ایجاد کن
+                let referralCode = userData.referral_code;
+                if (!referralCode) {
+                    referralCode = generateReferralCode();
+                    await supabase
+                        .from('users')
+                        .update({ referral_code: referralCode })
+                        .eq('id', userId);
+                }
+                
+                // شمارش انواع مختلف زیرمجموعه‌ها
+                const { count: goldCount, error: goldError } = await supabase
+                    .from('referrals')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('referrer_id', userId)
+                    .eq('status', 'active')
+                    .in('subscription_type', ['gold']);
+                    
+                const { count: diamondCount, error: diamondError } = await supabase
+                    .from('referrals')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('referrer_id', userId)
+                    .eq('status', 'active')
+                    .in('subscription_type', ['diamond']);
+                
+                // دریافت تاریخچه پاداش‌ها
+                const { data: rewardsData, error: rewardsError } = await supabase
+                    .from('referral_rewards')
+                    .select('*, users:referrer_id(full_name)')
+                    .eq('referrer_id', userId)
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                
+                // دریافت تاریخچه تراکنش‌های کیف پول
+                const { data: transactionsData, error: transactionsError } = await supabase
+                    .from('wallet_transactions')
+                    .select('*')
+                    .eq('user_id', userId)
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                
+                return {
+                    referralCode: referralCode,
+                    walletBalance: userData.wallet_balance || 0,
+                    totalReferrals: userData.total_referrals || 0,
+                    activeReferrals: userData.active_referrals || 0,
+                    goldReferrals: goldCount || 0,
+                    diamondReferrals: diamondCount || 0,
+                    rewards: rewardsData || [],
+                    transactions: transactionsData || []
+                };
+                
+            } catch (error) {
+                console.error('Error loading referral data:', error);
+                return null;
+            }
+        }
+        
+        // آپدیت UI سیستم معرف در پروفایل
+        async function updateReferralUI(userId) {
+            if (!userId) {
+                // حالت مهمان - مخفی کردن تب‌های کیف پول و معرف
+                document.querySelectorAll('.profile-tab[data-tab="wallet"], .profile-tab[data-tab="referral"]').forEach(tab => {
+                    tab.style.display = 'none';
+                });
+                
+                // نمایش تب اطلاعات به صورت پیش‌فرض
+                document.querySelector('.profile-tab[data-tab="info"]').click();
+                return;
+            }
+            
+            // نمایش همه تب‌ها برای کاربران لاگین کرده
+            document.querySelectorAll('.profile-tab').forEach(tab => {
+                tab.style.display = 'inline-block';
+            });
+            
+            // بارگیری داده‌ها
+            const referralData = await loadReferralData(userId);
+            if (!referralData) return;
+            
+            // آپدیت کد معرف
+            const referralCodeElement = document.getElementById('referralCode');
+            if (referralCodeElement) {
+                referralCodeElement.textContent = referralData.referralCode;
+            }
+            
+            // آپدیت موجودی کیف پول
+            const walletBalanceElement = document.getElementById('walletBalance');
+            if (walletBalanceElement) {
+                walletBalanceElement.textContent = referralData.walletBalance.toLocaleString('fa-IR') + ' تومان';
+            }
+            
+            // آپدیت کل پاداش‌های دریافتی
+            const totalRewardsElement = document.getElementById('totalRewards');
+            if (totalRewardsElement) {
+                const totalRewards = referralData.rewards.reduce((sum, reward) => sum + reward.amount, 0);
+                totalRewardsElement.textContent = totalRewards.toLocaleString('fa-IR') + ' تومان';
+            }
+            
+            // آپدیت آمار زیرمجموعه‌ها
+            document.getElementById('totalReferralsCount').textContent = referralData.totalReferrals;
+            document.getElementById('activeReferralsCount').textContent = referralData.activeReferrals;
+            document.getElementById('goldReferralsCount').textContent = referralData.goldReferrals;
+            document.getElementById('diamondReferralsCount').textContent = referralData.diamondReferrals;
+            document.getElementById('diamondReferrals').textContent = referralData.diamondReferrals + ' نفر';
+            
+            // آپدیت تاریخچه پاداش‌ها
+            const rewardsHistoryElement = document.getElementById('rewardsHistory');
+            if (rewardsHistoryElement && referralData.rewards.length > 0) {
+                let html = '';
+                referralData.rewards.forEach(reward => {
+                    const date = new Date(reward.created_at);
+                    const persianDate = date.toLocaleDateString('fa-IR');
+                    const time = date.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+                    
+                    html += `
+                        <div class="reward-item">
+                            <div class="reward-info">
+                                <h4>پاداش معرفی کاربر الماس</h4>
+                                <div class="reward-date">${persianDate} - ${time}</div>
+                            </div>
+                            <div class="reward-amount">+${reward.amount.toLocaleString('fa-IR')} تومان</div>
+                        </div>
+                    `;
+                });
+                rewardsHistoryElement.innerHTML = html;
+            } else if (rewardsHistoryElement) {
+                rewardsHistoryElement.innerHTML = `
+                    <div class="info-item" style="text-align: center; padding: 20px;">
+                        <div class="info-value" style="color: rgba(255,255,255,0.5);">
+                            <i class="fas fa-history" style="font-size: 24px; margin-bottom: 10px;"></i>
+                            <p>هنوز پاداشی دریافت نکرده‌اید</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // آپدیت زمان آخرین بروزرسانی
+            const lastUpdateElement = document.getElementById('lastUpdateTime');
+            if (lastUpdateElement) {
+                const now = new Date();
+                lastUpdateElement.textContent = `آخرین بروزرسانی: ${now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })}`;
+            }
+        }
         
         // ==================== SUPABASE FUNCTIONS ====================
         
@@ -3277,10 +3983,16 @@ input, textarea, select, button {
         
         // ==================== AUTHENTICATION FUNCTIONS ====================
         
-        // ثبت‌نام کاربر جدید
-        async function registerUser(fullName, email, phone, password) {
+        // ثبت‌نام کاربر جدید با سیستم معرف
+        async function registerUser(fullName, email, phone, password, referralCode = '') {
             try {
                 showNotification('در حال ثبت‌نام...', 'info');
+                
+                // اعتبارسنجی کد معرف
+                const referralValidation = await validateReferralCode(referralCode);
+                if (!referralValidation.valid) {
+                    throw new Error(referralValidation.error);
+                }
                 
                 // 1. ثبت‌نام در Auth
                 const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -3299,7 +4011,10 @@ input, textarea, select, button {
                 }
 
                 if (authData.user) {
-                    // 2. ذخیره در جدول users
+                    // ایجاد کد معرف برای کاربر جدید
+                    const userReferralCode = generateReferralCode();
+                    
+                    // 2. ذخیره در جدول users با اطلاعات سیستم معرف
                     const { error: userError } = await supabase
                         .from('users')
                         .upsert([
@@ -3308,7 +4023,11 @@ input, textarea, select, button {
                                 email: email,
                                 phone: phone,
                                 full_name: fullName,
-                                subscription_type: 'none'
+                                subscription_type: 'none',
+                                referral_code: userReferralCode,
+                                wallet_balance: 0,
+                                total_referrals: 0,
+                                active_referrals: 0
                             }
                         ], {
                             onConflict: 'id'
@@ -3318,26 +4037,24 @@ input, textarea, select, button {
                         console.warn('⚠️ Could not save to users table:', userError.message);
                     }
                     
+                    // 3. ثبت کاربر به عنوان زیرمجموعه (اگر کد معرف داشت)
+                    if (referralCode && referralCode.trim() !== '' && referralValidation.userId) {
+                        await registerReferral(authData.user.id, referralCode);
+                    }
+                    
                     showNotification('ثبت‌نام موفقیت‌آمیز بود!', 'success');
                     
                     closeAuthModal();
 
-                    // 2. آپدیت متن دکمه
+                    // آپدیت متن دکمه
                     const loginBtn = document.getElementById('loginBtn');
                     loginBtn.innerHTML = '<i class="fas fa-user"></i> پروفایل';
 
-                    // 3. رفتن مستقیم به پروفایل (بدون کلیک کاربر)
+                    // رفتن مستقیم به پروفایل
                     setTimeout(() => {
                         switchToProfileTab();
                     }, 300);
 
-                    return { success: true, user: authData.user };
-                    
-                    // 3. به‌روزرسانی UI
-                    setTimeout(async () => {
-                        await updateProfileUI(authData.user);
-                    }, 1000);
-                    
                     return { success: true, user: authData.user };
                 }
                 
@@ -3392,22 +4109,15 @@ input, textarea, select, button {
                 
                 closeAuthModal();
 
-                // 2. آپدیت متن دکمه
+                // آپدیت متن دکمه
                 const loginBtn = document.getElementById('loginBtn');
                 loginBtn.innerHTML = '<i class="fas fa-user"></i> پروفایل';
 
-                // 3. رفتن مستقیم به پروفایل (بدون کلیک کاربر)
+                // رفتن مستقیم به پروفایل
                 setTimeout(() => {
                     switchToProfileTab();
                 }, 300);
 
-                return { success: true, user: data.user };
-                
-                // به‌روزرسانی UI
-                setTimeout(async () => {
-                    await updateProfileUI(data.user);
-                }, 500);
-                
                 return { success: true, user: data.user };
                 
             } catch (error) {
@@ -3495,7 +4205,7 @@ input, textarea, select, button {
             }
         }
         
-        // ==================== SUBSCRIPTION FUNCTIONS ====================
+        // ==================== SUBSCRIPTION FUNCTIONS WITH REFERRAL REWARDS ====================
         
         // ایجاد اشتراک جدید
         async function createSubscription(userId, planType, price) {
@@ -3530,8 +4240,8 @@ input, textarea, select, button {
             }
         }
         
-        // فعال‌سازی اشتراک
-        async function activateSubscription(subscriptionId, transactionId) {
+        // فعال‌سازی اشتراک با بررسی پاداش
+        async function activateSubscription(subscriptionId, transactionId, planType) {
             try {
                 const { data, error } = await supabase
                     .from('subscriptions')
@@ -3554,6 +4264,20 @@ input, textarea, select, button {
                         subscription_expiry: data.end_date
                     })
                     .eq('id', data.user_id);
+                
+                // اگر اشتراک الماس است، بررسی پاداش معرف
+                if (planType === 'diamond') {
+                    const rewardGiven = await rewardReferrerForDiamondPurchase(data.user_id, subscriptionId);
+                    if (rewardGiven) {
+                        showNotification('پاداش ۱,۰۰۰,۰۰۰ تومانی به معرف شما پرداخت شد!', 'success');
+                    }
+                }
+                
+                // آپدیت نوع اشتراک در رکورد معرفی (برای آمار)
+                await supabase
+                    .from('referrals')
+                    .update({ subscription_type: planType })
+                    .eq('referred_id', data.user_id);
                 
                 // به‌روزرسانی UI
                 const { data: sessionData } = await supabase.auth.getSession();
@@ -3616,7 +4340,7 @@ async function updateModernProfileUI(user) {
             userNameElement.textContent = displayName;
             document.getElementById('modernUsername').textContent = displayName;
             
-            // آپدیت هدر سایت (بدون نیاز به کلیک)
+            // آپدیت هدر سایت
             const headerNameDisplay = document.getElementById('userNameDisplay');
             if (headerNameDisplay) {
                 headerNameDisplay.textContent = displayName;
@@ -3678,8 +4402,11 @@ async function updateModernProfileUI(user) {
             // نمایش دکمه خروج
             logoutSectionElement.style.display = 'block';
             
+            // آپدیت سیستم معرف و کیف پول
+            await updateReferralUI(user.id);
+            
         } else {
-            // اگر پروفایل کامل پیدا نشد، از اطلاعات auth استفاده کن
+            // اگر پروفایل کامل پیدا نشد
             const displayName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'کاربر';
             userNameElement.textContent = displayName;
             document.getElementById('modernUsername').textContent = displayName;
@@ -3702,6 +4429,9 @@ async function updateModernProfileUI(user) {
             userCreatedAtElement.textContent = new Date().toLocaleDateString('fa-IR');
             logoutSectionElement.style.display = 'block';
             userAvatarElement.innerHTML = '<i class="fas fa-user"></i>';
+            
+            // آپدیت سیستم معرف و کیف پول
+            await updateReferralUI(user.id);
         }
         
     } else {
@@ -3736,6 +4466,9 @@ async function updateModernProfileUI(user) {
             userIcon.innerHTML = '<i class="fas fa-user"></i>';
             userIcon.classList.remove('logged-in');
         }
+        
+        // مخفی کردن تب‌های کیف پول و معرف
+        await updateReferralUI(null);
     }
 }
 
@@ -3802,9 +4535,8 @@ function setupModernProfileEvents() {
     }
 }
 
-// ==================== MODIFY EXISTING FUNCTIONS ====================
+// ==================== تابع اصلی updateProfileUI ====================
 
-// تابع اصلی updateProfileUI را بروزرسانی کنید
 async function updateProfileUI(user) {
     // همزمان هر دو UI را آپدیت کن
     try {
@@ -3816,7 +4548,6 @@ async function updateProfileUI(user) {
     // آپدیت هدر و دکمه‌های اصلی
     const userNameDisplay = document.getElementById('userNameDisplay');
     const userIcon = document.getElementById('userIcon');
-    const logoutBtn = document.getElementById('logoutBtn');
     const loginBtn = document.getElementById('loginBtn');
     
     if (user) {
@@ -3831,7 +4562,6 @@ async function updateProfileUI(user) {
             userIcon.classList.add('logged-in');
         }
         
-        if (logoutBtn) logoutBtn.style.display = 'block';
         if (loginBtn) {
             loginBtn.innerHTML = '<i class="fas fa-user"></i> پروفایل';
             loginBtn.style.display = 'inline-flex';
@@ -3846,59 +4576,12 @@ async function updateProfileUI(user) {
             userIcon.classList.remove('logged-in');
         }
         
-        if (logoutBtn) logoutBtn.style.display = 'none';
         if (loginBtn) {
             loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> پروفایل کاربری';
             loginBtn.style.display = 'inline-flex';
         }
     }
 }
-
-// ==================== تابع خروج کاربر (تصحیح شده) ====================
-
-async function logoutUser() {
-    try {
-        const { error } = await supabase.auth.signOut();
-        if (error) throw error;
-        
-        showNotification('با موفقیت خارج شدید', 'success');
-        
-        // به‌روزرسانی UI
-        await updateProfileUI(null);
-        
-        return true;
-    } catch (error) {
-        console.error('❌ خطا در خروج:', error);
-        showNotification('خطا در خروج', 'error');
-        return false;
-    }
-}
-
-// ==================== INITIALIZE MODERN PROFILE ====================
-
-document.addEventListener('DOMContentLoaded', function() {
-    // راه‌اندازی رویدادهای پروفایل جدید
-    setTimeout(() => {
-        setupModernProfileEvents();
-        
-        // بررسی اولیه وضعیت کاربر
-        supabase.auth.getSession().then(async ({ data: sessionData }) => {
-            if (sessionData?.session?.user) {
-                console.log('User logged in on load:', sessionData.session.user.email);
-                await updateModernProfileUI(sessionData.session.user);
-            } else {
-                console.log('No user on load');
-                await updateModernProfileUI(null);
-            }
-        });
-        
-        // گوش دادن به تغییرات auth state
-        supabase.auth.onAuthStateChange(async (event, session) => {
-            console.log('Auth state changed:', event, session?.user?.email);
-            await updateModernProfileUI(session?.user || null);
-        });
-    }, 1000);
-});
         
         // تغییر به تب پروفایل
         function switchToProfileTab() {
@@ -3919,6 +4602,52 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateProfileUI(sessionData.session.user);
                 }
             });
+        }
+        
+        // تنظیم تب‌های داخلی پروفایل
+        function setupProfileTabs() {
+            const profileTabs = document.querySelectorAll('.profile-tab');
+            
+            profileTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // حذف کلاس active از همه تب‌ها
+                    profileTabs.forEach(t => t.classList.remove('active'));
+                    // اضافه کردن کلاس active به تب فعلی
+                    this.classList.add('active');
+                    
+                    // مخفی کردن همه محتواها
+                    document.querySelectorAll('.tab-content-internal').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // نمایش محتوای تب انتخاب شده
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(`profileTab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`).classList.add('active');
+                });
+            });
+            
+            // دکمه کپی کد معرف
+            const copyReferralBtn = document.getElementById('copyReferralBtn');
+            if (copyReferralBtn) {
+                copyReferralBtn.addEventListener('click', function() {
+                    const referralCodeElement = document.getElementById('referralCode');
+                    if (referralCodeElement) {
+                        const referralCode = referralCodeElement.textContent;
+                        navigator.clipboard.writeText(referralCode).then(() => {
+                            const originalText = this.innerHTML;
+                            this.innerHTML = '<i class="fas fa-check"></i> کپی شد!';
+                            showNotification('کد معرف با موفقیت کپی شد', 'success');
+                            
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Error copying text:', err);
+                            showNotification('خطا در کپی کردن کد', 'error');
+                        });
+                    }
+                });
+            }
         }
         
         // نمایش نوتیفیکیشن
@@ -3953,7 +4682,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 3000);
         }
         
-        // ==================== فرم چند مرحله‌ای جدید ====================
+        // ==================== فرم چند مرحله‌ای جدید با کد معرف ====================
         
         // مدیریت فرم چند مرحله‌ای
         let currentStep = 1;
@@ -3961,7 +4690,8 @@ document.addEventListener('DOMContentLoaded', function() {
             fullName: '',
             phone: '',
             email: '',
-            password: ''
+            password: '',
+            referralCode: ''
         };
         
         // رفتن به مرحله بعد
@@ -3970,6 +4700,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // اعتبارسنجی مرحله ۱
                 const fullName = document.getElementById('fullName').value.trim();
                 const phone = document.getElementById('phone').value.trim();
+                const referralCode = document.getElementById('referralCodeInput').value.trim();
                 
                 let isValid = true;
                 clearFormErrors();
@@ -3984,11 +4715,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     isValid = false;
                 }
                 
+                // اعتبارسنجی کد معرف (غیرهمزمان)
+                if (referralCode && referralCode.trim() !== '') {
+                    showError('referralCodeError', 'در حال بررسی کد معرف...');
+                    validateReferralCode(referralCode).then(result => {
+                        if (!result.valid) {
+                            showError('referralCodeError', result.error);
+                        } else {
+                            showSuccess('referralCodeSuccess', 'کد معرف معتبر است');
+                            formData.referralCode = referralCode;
+                        }
+                    });
+                }
+                
                 if (!isValid) return;
                 
                 // ذخیره داده‌ها
                 formData.fullName = fullName;
                 formData.phone = phone;
+                formData.referralCode = referralCode;
                 
                 // رفتن به مرحله ۲
                 document.getElementById('registerStep1').classList.remove('active');
@@ -4066,7 +4811,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.fullName,
                 formData.email,
                 formData.phone,
-                formData.password
+                formData.password,
+                formData.referralCode
             );
             
             // فعال‌سازی مجدد دکمه
@@ -4178,7 +4924,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // ریست مراحل
             currentStep = 1;
-            formData = { fullName: '', phone: '', email: '', password: '' };
+            formData = { fullName: '', phone: '', email: '', password: '', referralCode: '' };
             
             document.getElementById('registerStep1').classList.add('active');
             document.getElementById('registerStep2').classList.remove('active');
@@ -4214,10 +4960,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('confirmPassword').value = '';
             document.getElementById('loginIdentifier').value = '';
             document.getElementById('loginPassword').value = '';
+            document.getElementById('referralCodeInput').value = '';
             
             // ریست مراحل
             currentStep = 1;
-            formData = { fullName: '', phone: '', email: '', password: '' };
+            formData = { fullName: '', phone: '', email: '', password: '', referralCode: '' };
             
             document.getElementById('registerStep1').classList.add('active');
             document.getElementById('registerStep2').classList.remove('active');
@@ -4272,7 +5019,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // ==================== PURCHASE FUNCTIONS ====================
+        // ==================== PURCHASE FUNCTIONS WITH REFERRAL SYSTEM ====================
         
         // تنظیم دکمه‌های خرید
         function setupPurchaseButtons() {
@@ -4305,7 +5052,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             try {
                                 const activation = await activateSubscription(
                                     result.subscription.id,
-                                    'TXN_' + Date.now()
+                                    'TXN_' + Date.now(),
+                                    'gold'
                                 );
                                 
                                 if (activation.success) {
@@ -4351,7 +5099,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             try {
                                 const activation = await activateSubscription(
                                     result.subscription.id,
-                                    'TXN_' + Date.now()
+                                    'TXN_' + Date.now(),
+                                    'diamond'
                                 );
                                 
                                 if (activation.success) {
@@ -4468,7 +5217,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth'
                 });
                 
-                
                 // افکت ripple
                 createRipple(e);
             });
@@ -4487,10 +5235,11 @@ document.addEventListener('DOMContentLoaded', function() {
             setupCenterButton();
             
             // دکمه‌های مودال
-            const closeModalBtn = document.getElementById('closeModal');
+            const closeAuthModalBtn = document.getElementById('closeAuthModalBtn');
+            const closeProjectModalBtn = document.getElementById('closeProjectModalBtn');
             const loginBtn = document.getElementById('loginBtn');
             const authModal = document.getElementById('authModal');
-            const logoutBtn = document.getElementById('logoutBtn');
+            const projectModal = document.getElementById('projectModal');
             
             // دکمه ورود/پروفایل در صفحه اصلی
             loginBtn.addEventListener('click', async function(e) {
@@ -4535,8 +5284,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.addEventListener('click', createRipple);
             });
             
-            // بستن مودال
-            closeModalBtn.addEventListener('click', closeAuthModal);
+            // بستن مودال احراز هویت
+            closeAuthModalBtn.addEventListener('click', closeAuthModal);
+            
+            // بستن مودال پروژه
+            if (closeProjectModalBtn) {
+                closeProjectModalBtn.addEventListener('click', function() {
+                    projectModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            }
             
             // بستن مودال با کلیک خارج
             authModal.addEventListener('click', function(e) {
@@ -4545,10 +5302,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
+            if (projectModal) {
+                projectModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+            
             // بستن مودال با دکمه ESC
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeAuthModal();
+                    if (projectModal && projectModal.style.display === 'flex') {
+                        projectModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
                 }
             });
             
@@ -4584,35 +5354,40 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // دکمه خروج
-            logoutBtn.addEventListener('click', async function() {
-                if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
-                    try {
-                        const success = await logoutUser();
-                        if (success) {
-                            // رفتن به صفحه اصلی
-                            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-                            
-                            document.querySelector('[data-tab="home"]').classList.add('active');
-                            document.getElementById('homeTab').classList.add('active');
-                            
-                            // ریست دکمه مرکزی
-                            const centerButton = document.getElementById('centerNavButton');
-                            if (centerButton) {
-                                centerButton.classList.remove('active');
+            const modernLogoutBtn = document.getElementById('modernLogoutBtn');
+            if (modernLogoutBtn) {
+                modernLogoutBtn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    
+                    if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
+                        try {
+                            const success = await logoutUser();
+                            if (success) {
+                                // رفتن به صفحه اصلی
+                                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                                
+                                document.querySelector('[data-tab="home"]').classList.add('active');
+                                document.getElementById('homeTab').classList.add('active');
+                                
+                                // ریست دکمه مرکزی
+                                const centerButton = document.getElementById('centerNavButton');
+                                if (centerButton) {
+                                    centerButton.classList.remove('active');
+                                }
+                                
+                                // نوتیفیکیشن
+                                showNotification('با موفقیت از حساب خارج شدید', 'success');
+                                
+                                // افکت ویبره
+                                if (navigator.vibrate) navigator.vibrate(100);
                             }
-                            
-                            // نوتیفیکیشن
-                            showNotification('با موفقیت از حساب خارج شدید', 'success');
-                            
-                            // افکت ویبره
-                            if (navigator.vibrate) navigator.vibrate(100);
+                        } catch (error) {
+                            console.error('Error in logout:', error);
                         }
-                    } catch (error) {
-                        console.error('Error in logout:', error);
                     }
-                }
-            });
+                });
+            }
             
             // مدیریت رمز عبور
             document.querySelectorAll('.toggle-password').forEach(btn => {
@@ -4703,8 +5478,316 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('loginSubmitBtn').click();
                 }
             });
+            
+            // گوش دادن به تغییرات auth state برای آپدیت UI
+            supabase.auth.onAuthStateChange(async (event, session) => {
+                console.log('Auth state changed:', event, session?.user?.email);
+                await updateProfileUI(session?.user || null);
+            });
         }
+        
+        // ==================== سیستم پروژه‌ها ====================
+        
+        let allProjectsData = [];
+        let currentFilterType = 'all';
+        
+        // تابع اصلی لود پروژه‌ها
+        async function loadAllProjects() {
+            try {
+                console.log('📡 در حال اتصال به دیتابیس...');
+                
+                const grid = document.getElementById('projectsGrid');
+                if (!grid) {
+                    console.error('❌ المنت projectsGrid پیدا نشد!');
+                    return;
+                }
+                
+                // نمایش لودینگ
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px;">
+                        <div style="width: 50px; height: 50px; border: 3px solid rgba(255,215,0,0.3); border-top-color: #FFD700; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+                        <p style="color: rgba(255,255,255,0.7);">در حال بارگیری پروژه‌ها...</p>
+                    </div>
+                `;
+                
+                // دریافت داده‌ها
+                const { data, error } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                    
+                if (error) {
+                    console.error('❌ خطای Supabase:', error);
+                    throw error;
+                }
+                
+                allProjectsData = data || [];
+                console.log(`✅ ${allProjectsData.length} پروژه دریافت شد`);
+                
+                // نمایش پروژه‌ها
+                renderProjects(allProjectsData);
+                
+            } catch (error) {
+                console.error('❌ خطا در بارگیری:', error);
+                const grid = document.getElementById('projectsGrid');
+                if (grid) {
+                    grid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 60px; color: #ff6b6b;">
+                            <p style="margin-bottom: 15px;">خطا در بارگیری پروژه‌ها</p>
+                            <button onclick="loadAllProjects()" style="padding: 10px 25px; background: #FFD700; color: #1A1F3C; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                تلاش مجدد
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // نمایش پروژه‌ها
+        function renderProjects(projects) {
+            const grid = document.getElementById('projectsGrid');
+            if (!grid) return;
+            
+            if (!projects || projects.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px; color: rgba(255,255,255,0.5);">
+                        <i class="fas fa-folder-open" style="font-size: 50px; margin-bottom: 20px; opacity: 0.3;"></i>
+                        <p>پروژه‌ای برای نمایش وجود ندارد</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            projects.forEach((project, index) => {
+                // تاریخ‌ها
+                const startDate = new Date(project.start_date);
+                const endDate = new Date(project.end_date);
+                const persianStart = startDate.toLocaleDateString('fa-IR');
+                const persianEnd = endDate.toLocaleDateString('fa-IR');
+                
+                // وضعیت
+                let statusClass = '';
+                let statusText = '';
+                let statusIcon = '';
+                
+                switch(project.status) {
+                    case 'completed':
+                        statusClass = 'status-completed';
+                        statusText = 'تکمیل شده';
+                        statusIcon = 'fas fa-check-circle';
+                        break;
+                    case 'in_progress':
+                        statusClass = 'status-inprogress';
+                        statusText = 'در حال اجرا';
+                        statusIcon = 'fas fa-sync-alt';
+                        break;
+                    case 'upcoming':
+                        statusClass = 'status-upcoming';
+                        statusText = 'آینده';
+                        statusIcon = 'fas fa-clock';
+                        break;
+                    default:
+                        statusClass = 'status-completed';
+                        statusText = 'تکمیل شده';
+                        statusIcon = 'fas fa-check-circle';
+                }
+                
+                // تصویر
+                const imageUrl = project.images && project.images.length > 0 
+                    ? project.images[0] 
+                    : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop';
+                
+                // دسته‌بندی آیکون
+                let categoryIcon = 'fas fa-folder';
+                switch(project.category) {
+                    case 'مسکونی': categoryIcon = 'fas fa-home'; break;
+                    case 'تجاری': categoryIcon = 'fas fa-store'; break;
+                    case 'صنعتی': categoryIcon = 'fas fa-industry'; break;
+                    default: categoryIcon = 'fas fa-building';
+                }
+                
+                html += `
+                    <div class="project-card" onclick="showProjectDetails(${index})">
+                        <div class="project-image">
+                            <img src="${imageUrl}" 
+                                 alt="${project.title}" 
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop'">
+                            <div class="project-badge ${statusClass}">
+                                <i class="${statusIcon}"></i>
+                                ${statusText}
+                            </div>
+                        </div>
+                        
+                        <div class="project-content">
+                            <h3 class="project-title">${project.title}</h3>
+                            <p class="project-description">
+                                ${project.short_description || project.description?.substring(0, 100) + '...' || 'توضیحاتی ثبت نشده است'}
+                            </p>
+                            
+                            <div class="project-dates">
+                                <div class="date-box">
+                                    <div class="date-label">تاریخ شروع</div>
+                                    <div class="date-value">${persianStart}</div>
+                                </div>
+                                <div class="date-box">
+                                    <div class="date-label">تاریخ پایان</div>
+                                    <div class="date-value">${persianEnd}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="project-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${project.location || 'ثبت نشده'}</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="${categoryIcon}"></i>
+                                    <span>${project.category || 'عمومی'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+        }
+        
+        // فیلتر پروژه‌ها
+        function filterProjects(category) {
+            // آپدیت دکمه‌های فیلتر
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentFilterType = category;
+            
+            let filtered = [];
+            if (category === 'all') {
+                filtered = allProjectsData;
+            } else {
+                filtered = allProjectsData.filter(project => 
+                    project.category === category
+                );
+            }
+            
+            renderProjects(filtered);
+        }
+        
+        // نمایش جزئیات پروژه
+        function showProjectDetails(index) {
+            const projectsToShow = currentFilterType === 'all' ? allProjectsData : 
+                                 allProjectsData.filter(p => p.category === currentFilterType);
+            
+            const project = projectsToShow[index];
+            if (!project) return;
+            
+            // پر کردن مودال
+            document.getElementById('modalProjectTitle').textContent = project.title;
+            document.getElementById('modalProjectDescription').textContent = project.description || 'توضیحاتی ثبت نشده است';
+            
+            const startDate = new Date(project.start_date);
+            const endDate = new Date(project.end_date);
+            
+            document.getElementById('modalStartDate').textContent = startDate.toLocaleDateString('fa-IR');
+            document.getElementById('modalEndDate').textContent = endDate.toLocaleDateString('fa-IR');
+            document.getElementById('modalCategory').textContent = project.category || 'عمومی';
+            document.getElementById('modalLocation').textContent = project.location || 'ثبت نشده';
+            document.getElementById('modalClient').textContent = project.client_name || 'ثبت نشده';
+            
+            // وضعیت فارسی
+            let statusText = 'تکمیل شده';
+            if (project.status === 'in_progress') statusText = 'در حال اجرا';
+            if (project.status === 'upcoming') statusText = 'آینده';
+            document.getElementById('modalStatus').textContent = statusText;
+            
+            // نمایش مودال
+            document.getElementById('projectModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // راه‌اندازی سیستم پروژه‌ها
+        function initializeProjectsSystem() {
+            console.log('🚀 راه‌اندازی سیستم پروژه‌ها...');
+            
+            // اضافه کردن تب به نویگیشن
+            setTimeout(() => {
+                if (!document.querySelector('[data-tab="projects"]')) {
+                    const homeTab = document.querySelector('[data-tab="home"]');
+                    if (homeTab) {
+                        const homeLi = homeTab.closest('li');
+                        if (homeLi) {
+                            homeLi.insertAdjacentHTML('afterend', `
+                                <li>
+                                    <a href="#" class="nav-item" data-tab="projects">
+                                        <i class="fas fa-project-diagram nav-icon"></i>
+                                        <span class="nav-text">پروژه‌ها</span>
+                                    </a>
+                                </li>
+                            `);
+                            console.log('✅ تب پروژه‌ها اضافه شد');
+                        }
+                    }
+                }
+            }, 100);
+            
+            // بارگیری پروژه‌ها
+            setTimeout(() => {
+                loadAllProjects();
+            }, 500);
+            
+            // رویداد کلیک روی تب‌ها
+            document.addEventListener('click', function(e) {
+                const navItem = e.target.closest('.nav-item');
+                if (navItem) {
+                    const tab = navItem.getAttribute('data-tab');
+                    
+                    // غیرفعال کردن همه
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // فعال کردن تب انتخاب شده
+                    navItem.classList.add('active');
+                    
+                    if (tab === 'projects') {
+                        document.getElementById('projectsTab')?.classList.add('active');
+                    } else {
+                        document.getElementById(tab + 'Tab')?.classList.add('active');
+                    }
+                    
+                    // اسکرول به بالا
+                    document.querySelector('.main-container').scrollTop = 0;
+                }
+            });
+        }
+        
+        // ==================== اجرای اولیه ====================
+        
+        // راه‌اندازی رویدادهای پروفایل جدید
+        setTimeout(() => {
+            setupModernProfileEvents();
+            
+            // بررسی اولیه وضعیت کاربر
+            supabase.auth.getSession().then(async ({ data: sessionData }) => {
+                if (sessionData?.session?.user) {
+                    console.log('User logged in on load:', sessionData.session.user.email);
+                    await updateModernProfileUI(sessionData.session.user);
+                } else {
+                    console.log('No user on load');
+                    await updateModernProfileUI(null);
+                }
+            });
+        }, 1000);
     </script>
+    
     <!-- لودینگ مدرن برقی SPS -->
 <script>
 // ==================== لودینگ برقی SPS ====================
@@ -5791,7 +6874,6 @@ const reviewsTabHTML = `
     </section>
 </div>
 `;
-
 // ==================== SPS ABOUT US - SIMPLE CENTER MENU ====================
 (function() {
     'use strict';
@@ -6508,8 +7590,6 @@ const reviewsTabHTML = `
     
 })();
 
-// ==================== توابع اصلی سیستم ====================
-
 // راه‌اندازی سیستم نظرات
 async function initializeReviewsSystem() {
     console.log('🔄 Initializing Reviews System...');
@@ -7058,315 +8138,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // اضافه کردن تابع loadReviews به window برای دسترسی از HTML
 window.loadReviews = loadReviews;
 
-// ==================== سیستم پروژه‌های کامل ====================
+// ==================== توابع عمومی برای دسترسی از HTML ====================
 
-let allProjectsData = [];
-let currentFilterType = 'all';
-
-// 1. تابع اصلی لود پروژه‌ها
-async function loadAllProjects() {
-    try {
-        console.log('📡 در حال اتصال به دیتابیس...');
-        
-        const grid = document.getElementById('projectsGrid');
-        if (!grid) {
-            console.error('❌ المنت projectsGrid پیدا نشد!');
-            return;
-        }
-        
-        // نمایش لودینگ
-        grid.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 60px;">
-                <div style="width: 50px; height: 50px; border: 3px solid rgba(255,215,0,0.3); border-top-color: #FFD700; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-                <p style="color: rgba(255,255,255,0.7);">در حال بارگیری پروژه‌ها...</p>
-            </div>
-        `;
-        
-        // دریافت داده‌ها
-        const { data, error } = await supabase
-            .from('projects')
-            .select('*')
-            .order('created_at', { ascending: false });
-            
-        if (error) {
-            console.error('❌ خطای Supabase:', error);
-            throw error;
-        }
-        
-        allProjectsData = data || [];
-        console.log(`✅ ${allProjectsData.length} پروژه دریافت شد`);
-        
-        // نمایش پروژه‌ها
-        renderProjects(allProjectsData);
-        
-    } catch (error) {
-        console.error('❌ خطا در بارگیری:', error);
-        const grid = document.getElementById('projectsGrid');
-        if (grid) {
-            grid.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 60px; color: #ff6b6b;">
-                    <p style="margin-bottom: 15px;">خطا در بارگیری پروژه‌ها</p>
-                    <button onclick="loadAllProjects()" style="padding: 10px 25px; background: #FFD700; color: #1A1F3C; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                        تلاش مجدد
-                    </button>
-                </div>
-            `;
-        }
-    }
-}
-
-// 2. نمایش پروژه‌ها
-function renderProjects(projects) {
-    const grid = document.getElementById('projectsGrid');
-    if (!grid) return;
-    
-    if (!projects || projects.length === 0) {
-        grid.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 60px; color: rgba(255,255,255,0.5);">
-                <i class="fas fa-folder-open" style="font-size: 50px; margin-bottom: 20px; opacity: 0.3;"></i>
-                <p>پروژه‌ای برای نمایش وجود ندارد</p>
-            </div>
-        `;
-        return;
-    }
-    
-    let html = '';
-    
-    projects.forEach((project, index) => {
-        // تاریخ‌ها
-        const startDate = new Date(project.start_date);
-        const endDate = new Date(project.end_date);
-        const persianStart = startDate.toLocaleDateString('fa-IR');
-        const persianEnd = endDate.toLocaleDateString('fa-IR');
-        
-        // وضعیت
-        let statusClass = '';
-        let statusText = '';
-        let statusIcon = '';
-        
-        switch(project.status) {
-            case 'completed':
-                statusClass = 'status-completed';
-                statusText = 'تکمیل شده';
-                statusIcon = 'fas fa-check-circle';
-                break;
-            case 'in_progress':
-                statusClass = 'status-inprogress';
-                statusText = 'در حال اجرا';
-                statusIcon = 'fas fa-sync-alt';
-                break;
-            case 'upcoming':
-                statusClass = 'status-upcoming';
-                statusText = 'آینده';
-                statusIcon = 'fas fa-clock';
-                break;
-            default:
-                statusClass = 'status-completed';
-                statusText = 'تکمیل شده';
-                statusIcon = 'fas fa-check-circle';
-        }
-        
-        // تصویر
-        const imageUrl = project.images && project.images.length > 0 
-            ? project.images[0] 
-            : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop';
-        
-        // دسته‌بندی آیکون
-        let categoryIcon = 'fas fa-folder';
-        switch(project.category) {
-            case 'مسکونی': categoryIcon = 'fas fa-home'; break;
-            case 'تجاری': categoryIcon = 'fas fa-store'; break;
-            case 'صنعتی': categoryIcon = 'fas fa-industry'; break;
-            default: categoryIcon = 'fas fa-building';
-        }
-        
-        html += `
-            <div class="project-card" onclick="showProjectDetails(${index})">
-                <div class="project-image">
-                    <img src="${imageUrl}" 
-                         alt="${project.title}" 
-                         loading="lazy"
-                         onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop'">
-                    <div class="project-badge ${statusClass}">
-                        <i class="${statusIcon}"></i>
-                        ${statusText}
-                    </div>
-                </div>
-                
-                <div class="project-content">
-                    <h3 class="project-title">${project.title}</h3>
-                    <p class="project-description">
-                        ${project.short_description || project.description?.substring(0, 100) + '...' || 'توضیحاتی ثبت نشده است'}
-                    </p>
-                    
-                    <div class="project-dates">
-                        <div class="date-box">
-                            <div class="date-label">تاریخ شروع</div>
-                            <div class="date-value">${persianStart}</div>
-                        </div>
-                        <div class="date-box">
-                            <div class="date-label">تاریخ پایان</div>
-                            <div class="date-value">${persianEnd}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="project-info">
-                        <div class="info-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>${project.location || 'ثبت نشده'}</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="${categoryIcon}"></i>
-                            <span>${project.category || 'عمومی'}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
-    
-    grid.innerHTML = html;
-}
-
-// 3. فیلتر پروژه‌ها
-function filterProjects(category) {
-    // آپدیت دکمه‌های فیلتر
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    event.target.classList.add('active');
-    
-    currentFilterType = category;
-    
-    let filtered = [];
-    if (category === 'all') {
-        filtered = allProjectsData;
-    } else {
-        filtered = allProjectsData.filter(project => 
-            project.category === category
-        );
-    }
-    
-    renderProjects(filtered);
-}
-
-// 4. نمایش جزئیات پروژه
-function showProjectDetails(index) {
-    const projectsToShow = currentFilterType === 'all' ? allProjectsData : 
-                         allProjectsData.filter(p => p.category === currentFilterType);
-    
-    const project = projectsToShow[index];
-    if (!project) return;
-    
-    // پر کردن مودال
-    document.getElementById('modalProjectTitle').textContent = project.title;
-    document.getElementById('modalProjectDescription').textContent = project.description || 'توضیحاتی ثبت نشده است';
-    
-    const startDate = new Date(project.start_date);
-    const endDate = new Date(project.end_date);
-    
-    document.getElementById('modalStartDate').textContent = startDate.toLocaleDateString('fa-IR');
-    document.getElementById('modalEndDate').textContent = endDate.toLocaleDateString('fa-IR');
-    document.getElementById('modalCategory').textContent = project.category || 'عمومی';
-    document.getElementById('modalLocation').textContent = project.location || 'ثبت نشده';
-    document.getElementById('modalClient').textContent = project.client_name || 'ثبت نشده';
-    
-    // وضعیت فارسی
-    let statusText = 'تکمیل شده';
-    if (project.status === 'in_progress') statusText = 'در حال اجرا';
-    if (project.status === 'upcoming') statusText = 'آینده';
-    document.getElementById('modalStatus').textContent = statusText;
-    
-    // نمایش مودال
-    document.getElementById('projectModal').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-// 5. بستن مودال
-function closeProjectModal() {
-    document.getElementById('projectModal').style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-// 6. راه‌اندازی سیستم
-function initializeProjectsSystem() {
-    console.log('🚀 راه‌اندازی سیستم پروژه‌ها...');
-    
-    // الف) اضافه کردن تب به نویگیشن
-    setTimeout(() => {
-        if (!document.querySelector('[data-tab="projects"]')) {
-            const homeTab = document.querySelector('[data-tab="home"]');
-            if (homeTab) {
-                const homeLi = homeTab.closest('li');
-                if (homeLi) {
-                    homeLi.insertAdjacentHTML('afterend', `
-                        <li>
-                            <a href="#" class="nav-item" data-tab="projects">
-                                <i class="fas fa-project-diagram nav-icon"></i>
-                                <span class="nav-text">پروژه‌ها</span>
-                            </a>
-                        </li>
-                    `);
-                    console.log('✅ تب پروژه‌ها اضافه شد');
-                }
-            }
-        }
-    }, 100);
-    
-    // ب) بارگیری پروژه‌ها
-    setTimeout(() => {
-        loadAllProjects();
-    }, 500);
-    
-    // ج) رویداد کلیک روی تب‌ها
-    document.addEventListener('click', function(e) {
-        const navItem = e.target.closest('.nav-item');
-        if (navItem) {
-            const tab = navItem.getAttribute('data-tab');
-            
-            // غیرفعال کردن همه
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // فعال کردن تب انتخاب شده
-            navItem.classList.add('active');
-            
-            if (tab === 'projects') {
-                document.getElementById('projectsTab')?.classList.add('active');
-            } else {
-                document.getElementById(tab + 'Tab')?.classList.add('active');
-            }
-            
-            // اسکرول به بالا
-            document.querySelector('.main-container').scrollTop = 0;
-        }
-        
-        // بستن مودال با کلیک روی overlay
-        if (e.target.id === 'projectModal') {
-            closeProjectModal();
-        }
-    });
-    
-    // د) رویداد کلیک روی دکمه بستن مودال
-    document.getElementById('closeModal')?.addEventListener('click', closeProjectModal);
-}
-
-// 7. اجرای اولیه
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeProjectsSystem);
-} else {
-    initializeProjectsSystem();
-}
-
-// 8. اضافه کردن توابع به window
+// اضافه کردن توابع به window برای دسترسی از HTML
 window.showProjectDetails = showProjectDetails;
-window.closeProjectModal = closeProjectModal;
 window.filterProjects = filterProjects;
 window.loadAllProjects = loadAllProjects;
+window.togglePassword = togglePassword;
 </script>
 </body>
     </html>
