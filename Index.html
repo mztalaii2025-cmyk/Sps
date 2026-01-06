@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPS | خدمات برقی هوشمند</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+    const SUPABASE_URL = 'https://pigdpbfqrxpocmzyyfsr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpZ2RwYmZxcnhwb2Ntenl5ZnNyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUxMjIxMiwiZXhwIjoyMDgyMDg4MjEyfQ.RzhdhSnwi4WM1JP6U_jYQvJD9ztrpGNce6Nbhnr-oOM';
+        
+        // ایجاد کلاینت Supabase
+        if (typeof window.supabaseClient === 'undefined') {
+            var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            window.supabaseClient = supabase;
+        } else {
+            var supabase = window.supabaseClient;
+        }
+        </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- قبل از لینک‌های دیگر -->
 <link rel="preconnect" href="https://pigdpbfqrxpocmzyyfsr.supabase.co">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="dns-prefetch" href="https://pigdpbfqrxpocmzyyfsr.supabase.co">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Vazirmatn:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --primary-gold: #FFD700;
@@ -3126,8 +3138,8 @@ input, textarea, select, button {
         
         <!-- تب‌های داخلی پروفایل -->
         <div class="profile-tabs">
-            <button class="profile-tab active" data-tab="info">اطلاعات حساب</button>
-            <button class="profile-tab" data-tab="wallet">موجودی حساب</button>
+            <button class="profile-tab active" data-tab="info">اطلاعات</button>
+            <button class="profile-tab" data-tab="wallet">موجودی</button>
             <button class="profile-tab" data-tab="referral">زیرمجموعه ها</button>
         </div>
         
@@ -3549,46 +3561,39 @@ input, textarea, select, button {
     </button>
         <script>
         // ==================== SUPABASE CONFIGURATION ====================
-        const SUPABASE_URL = 'https://pigdpbfqrxpocmzyyfsr.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpZ2RwYmZxcnhwb2Ntenl5ZnNyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUxMjIxMiwiZXhwIjoyMDgyMDg4MjEyfQ.RzhdhSnwi4WM1JP6U_jYQvJD9ztrpGNce6Nbhnr-oOM';
-        
-        // ایجاد کلاینت Supabase
-        if (typeof window.supabaseClient === 'undefined') {
-            var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            window.supabaseClient = supabase;
-        } else {
-            var supabase = window.supabaseClient;
-        }
         
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', async function() {
-            console.log('🚀 SPS Application Initializing...');
+    console.log('🚀 SPS Application Initializing...');
+    
+    // اول UI را سریع لود کن
+    createEnergyParticles();
+    setupEventListeners();
+    setupProfileTabs();
+    initializeProjectsSystem();
+    setupBackToTop();
+    
+    // سپس اتصال دیتابیس را به صورت غیرهمزمان چک کن
+    setTimeout(async () => {
+        try {
+            console.log('🔗 Checking database connection...');
+            const isConnected = await testConnection();
             
-            // ایجاد ذرات انرژی
-            createEnergyParticles();
-            
-            // راه‌اندازی رویدادها
-            setupEventListeners();
-            
-            // راه‌اندازی تب‌های داخلی پروفایل
-            setupProfileTabs();
-            
-            // راه‌اندازی سیستم پروژه‌ها
-            initializeProjectsSystem();
-            
-            // دکمه بازگشت به بالا
-            setupBackToTop();
-            
-            // بررسی اتصال Supabase و وضعیت ورود
-            try {
-                await checkSupabaseConnection();
+            if (isConnected) {
                 await checkAuthStatus();
-            } catch (error) {
-                console.error('Initialization error:', error);
+                initializeProjectsSystem();
+                console.log('✅ All systems ready');
+            } else {
+                console.log('⚠️ Using offline mode');
+                showNotification('اتصال اینترنت ضعیف است. حالت آفلاین فعال شد.', 'info');
             }
-            
-            console.log('✅ SPS Application Ready');
-        });
+        } catch (error) {
+            console.error('Initialization error:', error);
+            // حالت آفلاین را ادامه بده
+            showNotification('سیستم در حالت آفلاین کار می‌کند', 'info');
+        }
+    }, 500); // تاخیر 500ms برای لود اولیه UI
+});
         
         // ==================== FUNCTIONS FOR NEW REFERRAL SYSTEM ====================
         
@@ -8143,6 +8148,920 @@ function setupReviewsSystem() {
         initializeReviewsSystem();
     }, 1000);
 }
+
+// ==================== SPS CONTACT SYSTEM - CLEAN VERSION ====================
+(function() {
+    'use strict';
+    
+    console.log('SPS Contact System - Clean Version');
+    
+    // ==================== CSS STYLES ====================
+    const contactStyles = `
+    <style id="sps-contact-styles">
+        /* استایل‌های بخش تماس */
+        #spsContactTab { 
+            display: none;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        #spsContactTab.active { 
+            display: block; 
+        }
+        
+        /* هدر تماس */
+        .sps-contact-header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .sps-contact-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFAA00 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .sps-contact-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* کارت‌های اطلاعات */
+        .sps-contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .sps-contact-card {
+            background: linear-gradient(135deg, 
+                rgba(26, 31, 60, 0.8) 0%,
+                rgba(10, 15, 43, 0.8) 100%);
+            border-radius: 25px;
+            padding: 30px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+        }
+        
+        .sps-contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, 
+                rgba(255, 215, 0, 0.05) 0%, 
+                transparent 70%);
+            pointer-events: none;
+        }
+        
+        .sps-contact-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(255, 215, 0, 0.1);
+        }
+        
+        .contact-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-icon-circle {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #FFD700;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .sps-contact-card:hover .contact-icon-circle {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .contact-card-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* اطلاعات تماس */
+        .contact-info {
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 215, 0, 0.1);
+        }
+        
+        .contact-item i {
+            color: #FFD700;
+            font-size: 18px;
+            width: 24px;
+        }
+        
+        .contact-item span {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            flex: 1;
+        }
+        
+        .phone-number {
+            direction: ltr;
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        
+        /* شبکه‌های اجتماعی */
+        .social-media-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .social-media-section h3 {
+            font-size: 24px;
+            color: #FFD700;
+            margin-bottom: 30px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .social-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-8px) scale(1.1);
+            color: white;
+        }
+        
+        .social-icon:hover::before {
+            transform: translateX(100%);
+        }
+        
+        /* رنگ‌های خاص هر شبکه اجتماعی */
+        .social-icon.whatsapp:hover {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            border-color: transparent;
+        }
+        
+        .social-icon.instagram:hover {
+            background: linear-gradient(135deg, #E4405F, #833AB4);
+            box-shadow: 0 10px 25px rgba(228, 64, 95, 0.3);
+            border-color: transparent;
+        }
+        
+        .social-icon.telegram:hover {
+            background: linear-gradient(135deg, #0088CC, #00A3E0);
+            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.3);
+            border-color: transparent;
+        }
+        
+        .social-icon.youtube:hover {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+            border-color: transparent;
+        }
+        
+        .social-icon.gmail:hover {
+            background: linear-gradient(135deg, #EA4335, #D14836);
+            box-shadow: 0 10px 25px rgba(234, 67, 53, 0.3);
+            border-color: transparent;
+        }
+        
+        .social-icon.eitaa:hover {
+            background: linear-gradient(135deg, #00A859, #008E4A);
+            box-shadow: 0 10px 25px rgba(0, 168, 89, 0.3);
+            border-color: transparent;
+        }
+        
+        /* نقشه موقعیت */
+        .map-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .map-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, 
+                rgba(26, 31, 60, 0.8) 0%,
+                rgba(10, 15, 43, 0.8) 100%);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+        }
+        
+        .map-placeholder i {
+            font-size: 60px;
+            color: rgba(255, 215, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        
+        .map-placeholder p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+        
+        /* افکت‌های زیبا */
+        .contact-effects {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .effect-sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #FFD700;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: sparkleFloat 3s infinite ease-in-out;
+        }
+        
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                opacity: 0;
+                transform: translate(0, 0) scale(0.5);
+            }
+            50% { 
+                opacity: 1;
+                transform: translate(var(--tx), var(--ty)) scale(1);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* لودینگ */
+        .sps-contact-loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .contact-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 215, 0, 0.1);
+            border-top-color: #FFD700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            .sps-contact-header h1 {
+                font-size: 28px;
+            }
+            
+            .sps-contact-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .social-grid {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 300px;
+            }
+            
+            .social-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 22px;
+            }
+            
+            .contact-icon-circle {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sps-contact-card {
+                padding: 20px;
+            }
+            
+            .social-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .social-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 20px;
+            }
+            
+            .map-placeholder {
+                height: 200px;
+            }
+        }
+    </style>
+    `;
+    
+    // ==================== HTML STRUCTURE ====================
+    const contactTabHTML = `
+    <div id="spsContactTab" class="tab-content">
+        <!-- افکت‌های زیبا -->
+        <div class="contact-effects" id="contactEffects"></div>
+        
+        <div class="sps-contact-header">
+            <h1><i class="fas fa-headset"></i> تماس با SPS</h1>
+            <p>برای دریافت مشاوره و خدمات با ما در ارتباط باشید</p>
+        </div>
+        
+        <div class="sps-contact-grid" id="contactContent">
+            <div class="sps-contact-loading">
+                <div class="contact-loading-spinner"></div>
+                <p>در حال دریافت اطلاعات تماس...</p>
+            </div>
+        </div>
+    </div>
+    `;
+    
+    // ==================== CORE FUNCTIONS ====================
+    
+    let isContactTabActive = false;
+    
+    // Initialize System
+    function initContactSystem() {
+        console.log('🚀 Initializing SPS Contact System...');
+        
+        // Add Styles
+        if (!document.getElementById('sps-contact-styles')) {
+            document.head.insertAdjacentHTML('beforeend', contactStyles);
+        }
+        
+        // Add Contact Page
+        if (!document.getElementById('spsContactTab')) {
+            const mainContainer = document.querySelector('.main-container');
+            if (mainContainer) {
+                mainContainer.insertAdjacentHTML('beforeend', contactTabHTML);
+            } else {
+                setTimeout(initContactSystem, 100);
+                return;
+            }
+        }
+        
+        // Add to Center Navigation Menu
+        addContactToNavigation();
+        
+        // Setup Tab Navigation
+        setupContactTabNavigation();
+        
+        // Setup Global Event Listeners
+        setupGlobalEventListeners();
+        
+        console.log('✅ SPS Contact System Ready');
+    }
+    
+    // Add Contact to Center Navigation
+    function addContactToNavigation() {
+        let centerMenu = document.getElementById('centerNavMenu');
+        
+        if (!centerMenu) {
+            createCenterMenu();
+            centerMenu = document.getElementById('centerNavMenu');
+        }
+        
+        if (!centerMenu) return;
+        
+        // Check if already exists
+        if (document.querySelector('[data-tab="spsContact"]')) {
+            return;
+        }
+        
+        // Add contact item to menu
+        const aboutItem = centerMenu.querySelector('[data-tab="spsAbout"]');
+        if (aboutItem) {
+            const contactItem = document.createElement('button');
+            contactItem.className = 'center-menu-item';
+            contactItem.setAttribute('data-tab', 'spsContact');
+            contactItem.innerHTML = `
+                <i class="fas fa-phone-alt"></i>
+                تماس با ما
+            `;
+            
+            aboutItem.parentNode.insertBefore(contactItem, aboutItem.nextSibling);
+        } else {
+            const contactItem = document.createElement('button');
+            contactItem.className = 'center-menu-item';
+            contactItem.setAttribute('data-tab', 'spsContact');
+            contactItem.innerHTML = `
+                <i class="fas fa-phone-alt"></i>
+                تماس با ما
+            `;
+            
+            centerMenu.appendChild(contactItem);
+        }
+        
+        // Re-attach event listeners
+        setupCenterMenuEvents();
+    }
+    
+    // Create Center Menu if doesn't exist
+    function createCenterMenu() {
+        const centerButton = document.getElementById('centerNavButton');
+        if (!centerButton) return;
+        
+        // Remove existing menu if any
+        const oldMenu = document.getElementById('centerNavMenu');
+        if (oldMenu) oldMenu.remove();
+        
+        // Create new menu
+        const menuHTML = `
+            <div class="center-nav-menu" id="centerNavMenu" style="display: none;">
+                <button class="center-menu-item" data-tab="spsAbout">
+                    <i class="fas fa-info-circle"></i>
+                    درباره ما
+                </button>
+                <button class="center-menu-item" data-tab="spsContact">
+                    <i class="fas fa-phone-alt"></i>
+                    تماس با ما
+                </button>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', menuHTML);
+    }
+    
+    // Setup Center Menu Events
+    function setupCenterMenuEvents() {
+        const centerButton = document.getElementById('centerNavButton');
+        const centerMenu = document.getElementById('centerNavMenu');
+        
+        if (!centerButton || !centerMenu) return;
+        
+        // Remove existing event listeners
+        centerButton.replaceWith(centerButton.cloneNode(true));
+        const newCenterButton = document.getElementById('centerNavButton');
+        
+        // Toggle menu on center button click
+        newCenterButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const isVisible = centerMenu.style.display === 'block';
+            centerMenu.style.display = isVisible ? 'none' : 'block';
+            
+            if (!isVisible) {
+                this.classList.add('active');
+            } else {
+                this.classList.remove('active');
+            }
+        });
+        
+        // Handle menu item click
+        centerMenu.addEventListener('click', function(e) {
+            const item = e.target.closest('.center-menu-item');
+            if (!item) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Close menu
+            this.style.display = 'none';
+            newCenterButton.classList.remove('active');
+            
+            // Go to selected page
+            const tab = item.getAttribute('data-tab');
+            switchTab(tab);
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (centerMenu && 
+                !centerMenu.contains(e.target) && 
+                !newCenterButton.contains(e.target)) {
+                centerMenu.style.display = 'none';
+                newCenterButton.classList.remove('active');
+            }
+        });
+    }
+    
+    // Switch between tabs
+    function switchTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.classList.remove('active');
+        });
+        
+        // Show selected tab
+        if (tabName === 'spsContact') {
+            const contactTab = document.getElementById('spsContactTab');
+            if (contactTab) {
+                contactTab.classList.add('active');
+                isContactTabActive = true;
+                
+                // Load contact data
+                setTimeout(() => {
+                    loadContactData();
+                }, 100);
+            }
+        } 
+        else if (tabName === 'spsAbout') {
+            const aboutTab = document.getElementById('spsAboutTab');
+            if (aboutTab) {
+                aboutTab.classList.add('active');
+                isContactTabActive = false;
+            }
+        }
+        else {
+            const tab = document.getElementById(tabName + 'Tab');
+            if (tab) {
+                tab.classList.add('active');
+            }
+            
+            const nav = document.querySelector(`[data-tab="${tabName}"]`);
+            if (nav) {
+                nav.classList.add('active');
+            }
+            
+            isContactTabActive = false;
+        }
+        
+        // Scroll to top
+        const mainContainer = document.querySelector('.main-container');
+        if (mainContainer) {
+            mainContainer.scrollTop = 0;
+        }
+    }
+    
+    // Setup tab navigation
+    function setupContactTabNavigation() {
+        // Listen for clicks on menu items
+        document.addEventListener('click', function(e) {
+            const menuItem = e.target.closest('.center-menu-item');
+            if (menuItem) {
+                const tab = menuItem.getAttribute('data-tab');
+                if (tab === 'spsContact') {
+                    e.preventDefault();
+                    switchTab('spsContact');
+                }
+            }
+        });
+    }
+    
+    // Setup global event listeners
+    function setupGlobalEventListeners() {
+        // Listen for any tab change
+        document.addEventListener('click', function(e) {
+            // Handle nav items in bottom nav
+            const navItem = e.target.closest('.nav-item');
+            if (navItem) {
+                const tab = navItem.getAttribute('data-tab');
+                if (tab && tab !== 'spsContact') {
+                    isContactTabActive = false;
+                }
+            }
+        });
+    }
+    
+    // Load contact data from Supabase
+    async function loadContactData() {
+        if (!isContactTabActive) return;
+        
+        const contactContent = document.getElementById('contactContent');
+        if (!contactContent) return;
+        
+        // Show loading state
+        contactContent.innerHTML = `
+            <div class="sps-contact-loading">
+                <div class="contact-loading-spinner"></div>
+                <p>در حال دریافت اطلاعات تماس...</p>
+            </div>
+        `;
+        
+        try {
+            const { data, error } = await supabase
+                .from('contact_info')
+                .select('*')
+                .single();
+            
+            if (error) {
+                showFallbackContactData();
+                return;
+            }
+            
+            displayContactData(data);
+            
+        } catch (error) {
+            showFallbackContactData();
+        }
+    }
+    
+    // Display contact data
+    function displayContactData(data) {
+        const contactContent = document.getElementById('contactContent');
+        if (!contactContent) return;
+        
+        // Create sparkle effects
+        createSparkleEffects();
+        
+        // Generate HTML content
+        contactContent.innerHTML = `
+            <!-- کارت اطلاعات تماس -->
+            <div class="sps-contact-card">
+                <div class="contact-card-header">
+                    <div class="contact-icon-circle">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>اطلاعات تماس</h3>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span class="phone-number">${data.phone || '۰۲۱-۱۲۳۴۵۶۷۸'}</span>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${data.address || 'تهران، خیابان ولیعصر'}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- کارت شبکه‌های اجتماعی -->
+            <div class="sps-contact-card">
+                <div class="contact-card-header">
+                    <div class="contact-icon-circle">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>شبکه‌های اجتماعی</h3>
+                </div>
+                
+                <div class="social-media-section">
+                    <div class="social-grid">
+                        <a href="${data.whatsapp_link || '#'}" target="_blank" class="social-icon whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="${data.instagram_link || '#'}" target="_blank" class="social-icon instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="${data.telegram_link || '#'}" target="_blank" class="social-icon telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="${data.youtube_link || '#'}" target="_blank" class="social-icon youtube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="${data.gmail_link || '#'}" target="_blank" class="social-icon gmail">
+                            <i class="fab fa-google"></i>
+                        </a>
+                        <a href="${data.eitaa_link || '#'}" target="_blank" class="social-icon eitaa">
+                            <i class="fas fa-paper-plane"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- نقشه موقعیت -->
+            <div class="map-section" style="grid-column: 1 / -1;">
+                <h3><i class="fas fa-map-marked-alt"></i> موقعیت ما روی نقشه</h3>
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <i class="fas fa-map"></i>
+                        <p>نقشه تعاملی موقعیت شرکت</p>
+                        <small style="color: rgba(255,255,255,0.3); margin-top: 10px;">
+                            می‌توانید از Google Maps Embed استفاده کنید
+                        </small>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add social icon hover effects
+        setupSocialIconEffects();
+    }
+    
+    // Show fallback data if Supabase fails
+    function showFallbackContactData() {
+        const contactContent = document.getElementById('contactContent');
+        if (!contactContent) return;
+        
+        const fallbackData = {
+            phone: '۰۲۱-۱۲۳۴۵۶۷۸',
+            address: 'تهران، خیابان ولیعصر، پلاک ۱۰۰۰',
+            whatsapp_link: 'https://wa.me/989121234567',
+            instagram_link: 'https://instagram.com/sps_electric',
+            telegram_link: 'https://t.me/sps_electric',
+            youtube_link: 'https://youtube.com/@sps_electric',
+            gmail_link: 'mailto:info@sps-electric.com',
+            eitaa_link: 'https://eitaa.com/sps_electric'
+        };
+        
+        displayContactData(fallbackData);
+    }
+    
+    // Create sparkle effects
+    function createSparkleEffects() {
+        const effectsContainer = document.getElementById('contactEffects');
+        if (!effectsContainer) return;
+        
+        effectsContainer.innerHTML = '';
+        
+        for (let i = 0; i < 15; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'effect-sparkle';
+            
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            sparkle.style.left = `${x}%`;
+            sparkle.style.top = `${y}%`;
+            
+            const tx = (Math.random() - 0.5) * 100;
+            const ty = (Math.random() - 0.5) * 100;
+            sparkle.style.setProperty('--tx', `${tx}px`);
+            sparkle.style.setProperty('--ty', `${ty}px`);
+            
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+            sparkle.style.opacity = Math.random() * 0.5;
+            
+            effectsContainer.appendChild(sparkle);
+        }
+    }
+    
+    // Setup social icon hover effects
+    function setupSocialIconEffects() {
+        const socialIcons = document.querySelectorAll('.social-icon');
+        
+        socialIcons.forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                if (navigator.vibrate) {
+                    navigator.vibrate(30);
+                }
+            });
+            
+            icon.addEventListener('click', function(e) {
+                if (!this.getAttribute('href') || this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    showNotification('لینک در حال حاضر فعال نیست', 'info');
+                }
+            });
+        });
+    }
+    
+    // Show notification function
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+            <div>${message}</div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+    
+    // ==================== INITIALIZATION ====================
+    
+    // Wait for everything to be ready
+    function initialize() {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                checkSupabase();
+            });
+        } else {
+            checkSupabase();
+        }
+    }
+    
+    // Check if Supabase is loaded
+    function checkSupabase() {
+        if (window.supabase) {
+            setTimeout(initContactSystem, 1000);
+        } else {
+            setTimeout(checkSupabase, 500);
+        }
+    }
+    
+    // Start initialization
+    initialize();
+    
+    // Export functions
+    window.spsContact = {
+        showContact: function() {
+            switchTab('spsContact');
+        }
+    };
+    
+})();
 
 // ==================== اجرای سیستم ====================
 
